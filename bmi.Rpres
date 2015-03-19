@@ -1,0 +1,74 @@
+BMI calculator Presentation
+========================================================
+author: KrzyKu
+date: `r date()`
+
+About app
+========================================================
+
+Application calculates Body Mass Index
+
+
+Values needed to input from user
+- Weight [kg]
+- Height [cm]
+
+
+BMI 
+========================================================
+
+Calculation defualt values:
+height = 170
+weight = 70
+
+```{r, echo=TRUE}
+
+calcBMI <-function(height,weight) {weight/((height/100)*(height/100))}
+
+calcBMI(170,70)
+
+```
+
+
+BMI cm,kg
+========================================================
+
+```{r, echo=FALSE}
+height <- seq(100,230, length.out=100)
+weight <- seq(40,150, length.out=100)
+wtht <- expand.grid(x=height, y=weight)
+calcBMI <-function(height,weight) {weight/((height/100)*(height/100))}
+
+bmiwtht <- matrix(calcBMI(wtht$x,wtht$y),length(height),length(weight))
+
+
+contour(height,weight,bmiwtht,levels = c(18.5,25), drawlabels=FALSE,
+        xlab="Height (cm)",ylab="Weight (kg)",
+        main="BMI categories by height and weight")
+
+text(175,95,"Overweight",cex=2,srt=40)
+text(185,75,"Normal",cex=2,srt=35)
+text(195,55,"Underweight",cex=2,srt=38)
+```
+
+BMI lbs,inches
+========================================================
+
+```{r, echo=FALSE}
+height <- seq(48,84, length.out=1000)
+weight <- seq(90,300, length.out=1000)
+wtht <- expand.grid(x=height, y=weight)
+calcBMI <-function(height,weight) {weight/((height/100)*(height/100))}
+bmi <- function(h,w) {(w * 703)/(h*h)}
+bmiwtht <- matrix(bmi(wtht$x,wtht$y),length(height),length(weight))
+
+
+contour(height,weight,bmiwtht,levels = c(18.5,25), drawlabels=FALSE,
+        xlab="Height (inches)",ylab="Weight (lbs)",
+        main="BMI categories by height and weight")
+
+#text(55,200,"Obese",cex=2,srt=45)
+text(65,165,"Overweight",cex=2,srt=40)
+text(70,150,"Normal",cex=2,srt=35)
+text(75,120,"Underweight",cex=2,srt=18)
+```
